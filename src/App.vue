@@ -1,6 +1,6 @@
 <template>
   <nav-bar/>
-    <home/>
+    <router-view/>
   <footer/>
 </template>
 

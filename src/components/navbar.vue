@@ -22,7 +22,7 @@
           <div class="flex justify-center">
             <el-dropdown>
               <el-button class="border-0">
-                <a href="#" class="px-4 py-2 font-semibold text-gray-600 rounded">
+                <a class="px-4 py-2 font-semibold text-gray-600 rounded">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                        stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -31,8 +31,12 @@
                 </a>
               </el-button>
               <template #dropdown>
-                <el-dropdown-menu>
-                  <router-link to="/account"> <el-dropdown-item>My Account</el-dropdown-item></router-link>
+                <el-dropdown-menu v-if="isLoggedIn">
+                  <el-dropdown-item>{{user.full_name}}</el-dropdown-item>
+                  <el-dropdown-item @click.native="logoutUser">Logout</el-dropdown-item>
+                </el-dropdown-menu>
+                <el-dropdown-menu v-else>
+                  <router-link to="/account"><el-dropdown-item>My Account</el-dropdown-item></router-link>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -108,6 +112,7 @@
 
 <script>
 import { ArrowDown } from '@element-plus/icons-vue'
+import {mapActions, mapGetters} from "vuex";
 export default {
   name: "NavBar",
   data() {
@@ -118,7 +123,18 @@ export default {
     };
   },
   components: {ArrowDown},
+  computed:{
+    isLoggedIn() {
+      return this.$store.getters['users/loggedIn'];
+    },
+    ...mapGetters({
+      user:'users/user'
+    })
+  },
   methods: {
+    ...mapActions({
+      logout: 'users/logout'
+    }),
     tog() {
       this.open = !this.open;
       if (this.open === true) {
@@ -131,6 +147,9 @@ export default {
         this.open = false
       }
     },
+    logoutUser(){
+      this.logout()
+    }
   }
 };
 </script>
