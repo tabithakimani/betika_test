@@ -1,4 +1,5 @@
 import api from "../api";
+import { ElMessage } from 'element-plus'
 
 export default {
     namespaced: true,
@@ -24,7 +25,10 @@ export default {
                 const response = await api.getProducts(filters);
                 commit('setProducts', response);
             } catch (e) {
-                this._vm.$message.error('Error fetching products!');
+                ElMessage({
+                    dangerouslyUseHTMLString: true,
+                    message: 'Error fetching products!',
+                })
             }
         },
         async getProduct({commit}, filters) {
@@ -32,7 +36,10 @@ export default {
                 const response = await api.getProduct(filters);
                 commit('setProduct', response);
             } catch (e) {
-                this._vm.$message.error('Error fetching product!');
+                ElMessage({
+                    dangerouslyUseHTMLString: true,
+                    message: 'Error fetching product!',
+                })
             }
         },
     }

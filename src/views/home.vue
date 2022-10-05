@@ -16,47 +16,41 @@
               Sort By
             </p>
           </div>
-          {{tags}}
-          <div class="flex-row space-x-2 space-y-2">
-            <ul v-for="tag in tags" class="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
-              <li class="relative">
-                <input class="sr-only peer" type="radio" v-model="filters.tag" :name="tag" id="answer_yes">
-                <label class="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent" for="answer_yes">Yes</label>
 
-                <div class="absolute hidden w-5 h-5 peer-checked:block top-5 right-3">
-                  👍
+          <div class="flex-row space-x-2 space-y-2">
+            <ul class="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
+              <li class="relative">
+                <input class="sr-only peer" type="radio" value="price" v-model="filters.sort_by" id="answer_price">
+                <label
+                    class="flex items-center justify-center hover:bg-red-950 hover:text-white p-2 bg-white border border-gray-300 rounded-full cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-950 peer-checked:ring-2 peer-checked:border-transparent"
+                    for="answer_price">Price</label>
+
+                <div class="absolute hidden w-5 h-5 peer-checked:block top-3 right-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                       stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                  </svg>
                 </div>
               </li>
+
+              <li class="relative">
+                <input class="sr-only peer" type="radio" value="quality" v-model="filters.sort_by" id="answer_vintage">
+                <label
+                    class="flex items-center justify-center hover:bg-red-950 hover:text-white p-2 bg-white border border-gray-300 rounded-full cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-950 peer-checked:ring-2 peer-checked:border-transparent"
+                    for="answer_vintage">Vintage</label>
+
+                <div class="absolute hidden w-5 h-5 peer-checked:block top-3 right-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                       stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                  </svg>
+                </div>
+              </li>
+              <button v-if="filters.sort_by" @click="uncheckSortBy"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black"
+                                               class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg></button>
             </ul>
-<!--            <button -->
-<!--               class="relative inline-flex items-center justify-center p-4 px-6 py-2 md:w-40 w-28 overflow-hidden font-medium text-black transition duration-300 ease-out border-2 border-gray-500 rounded-full shadow-md group">-->
-<!--            <span-->
-<!--                class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gray-500 group-hover:translate-x-0 ease">-->
-<!--              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-<!--                   stroke="currentColor" class="w-6 h-6">-->
-<!--                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>-->
-<!--              </svg>-->
-
-<!--            </span>-->
-<!--              <span-->
-<!--                  class="absolute flex items-center justify-center w-full h-full text-gray-500 transition-all duration-300 transform group-hover:translate-x-full ease">Price</span>-->
-<!--              <span class="relative invisible">Price</span>-->
-<!--            </button>-->
-
-<!--            <button-->
-<!--               class="relative inline-flex items-center justify-center p-4 px-6 py-2 md:w-40 w-28  overflow-hidden font-medium text-gray-500 transition duration-300 ease-out border-2 border-gray-500 rounded-full shadow-md group">-->
-<!--            <span-->
-<!--                class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gray-500 group-hover:translate-x-0 ease">-->
-<!--              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-<!--                   stroke="currentColor" class="w-6 h-6">-->
-<!--                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>-->
-<!--              </svg>-->
-
-<!--            </span>-->
-<!--              <span-->
-<!--                  class="absolute flex items-center justify-center w-full h-full text-gray-500 transition-all duration-300 transform group-hover:translate-x-full ease">Vintage</span>-->
-<!--              <span class="relative invisible">Vintage</span>-->
-<!--            </button>-->
           </div>
         </div>
         <div class="md:w-1/2 w-full">
@@ -66,50 +60,29 @@
             </p>
           </div>
           <div class="flex-row space-x-2 space-y-2">
-            <a href="#_"
-               class="relative inline-flex items-center justify-center p-4 px-6 py-2 md:w-40 w-28 overflow-hidden font-medium text-gray-500 transition duration-300 ease-out border-2 border-gray-500 rounded-full shadow-md group">
-            <span
-                class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gray-500 group-hover:translate-x-0 ease">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                   stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
-              </svg>
+            <ul class="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
+              <div v-for="(tag,index) in tags" :key="index">
 
-            </span>
-              <span
-                  class="absolute flex items-center justify-center w-full h-full text-gray-500 transition-all duration-300 transform group-hover:translate-x-full ease">Red</span>
-              <span class="relative invisible">Red</span>
-            </a>
+                <li class="relative">
+                  <input class="sr-only peer" type="radio" v-bind:value="tag" v-model="filters.tag" :id="index">
+                  <label v-bind:for="index"
+                          class="flex items-center justify-center hover:bg-red-950 hover:text-white p-2 bg-white border border-gray-300 rounded-full cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-950 peer-checked:ring-2 peer-checked:border-transparent">
+                   {{ tag }}
+                  </label>
 
-            <a href="#_"
-               class="relative inline-flex items-center justify-center p-4 px-6 py-2 md:w-40 w-28 overflow-hidden font-medium text-gray-500 transition duration-300 ease-out border-2 border-gray-500 rounded-full shadow-md group">
-            <span
-                class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gray-500 group-hover:translate-x-0 ease">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                   stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
-              </svg>
-
-            </span>
-              <span
-                  class="absolute flex items-center justify-center w-full h-full text-gray-500 transition-all duration-300 transform group-hover:translate-x-full ease">White</span>
-              <span class="relative invisible">White</span>
-            </a>
-
-            <a href="#_"
-               class="relative inline-flex items-center justify-center p-4 px-6 py-2 md:w-40 w-28 overflow-hidden font-medium text-gray-500 transition duration-300 ease-out border-2 border-gray-500 rounded-full shadow-md group">
-            <span
-                class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gray-500 group-hover:translate-x-0 ease">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                   stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
-              </svg>
-
-            </span>
-              <span
-                  class="absolute flex items-center justify-center w-full h-full text-gray-500 transition-all duration-300 transform group-hover:translate-x-full ease">Sparkling</span>
-              <span class="relative invisible">Sparkling</span>
-            </a>
+                  <div class="absolute hidden w-5 h-5 peer-checked:block top-3 right-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                    </svg>
+                  </div>
+                </li>
+              </div>
+              <button v-if="filters.tag" @click="uncheckTags"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black"
+                                                                   class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg></button>
+            </ul>
           </div>
         </div>
       </div>
@@ -133,19 +106,20 @@
                     </div>
                     <div class="flex flex-col items-center justify-center w-full h-[16%]">
                       UOM
-                      <el-select v-model="form.uom" class="m-2" placeholder="Select" size="small" style="width: 60%">
+                      <el-select v-model="product.uom" :value="product.id" @change="updateUom" class="m-2" placeholder="Select" size="small" style="width: 60%">
                         <el-option
-                            v-for="item in product.unit_of_measures"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
+                            label="Case"
+                            value="case"
+                        />
+                        <el-option
+                            label="Bottle"
+                            value="bottle"
                         />
                       </el-select>
                     </div>
                     <div class="flex justify-center items-end w-full h-[16%]">
                       <button
                           class="relative inline-flex items-center justify-center overflow-hidden w-2/5 p-2 h-full font-medium bg-transparent text-red-950 border border-red-950 rounded-full">
-                        {{}}
                       </button>
                     </div>
                     <div class="flex justify-center items-end w-full mx-2 h-[33%]">
@@ -252,7 +226,8 @@ export default {
       filters: {
         paginate: true
       },
-      form:{}
+      form: {},
+      price:'',
     }
   },
   mounted() {
@@ -263,9 +238,9 @@ export default {
     ...mapGetters({
       products: 'products/products',
       product: 'products/product',
-      uoms:'uoms/uoms'
+      uoms: 'uoms/uoms'
     }),
-    tags(){
+    tags() {
       var products = this.products.data.data
       return products?.map(function (item) {
         return item.class;
@@ -280,8 +255,15 @@ export default {
     ...mapActions({
       getProducts: 'products/getProducts',
       getProduct: 'products/getProduct',
-      getUnitOfMeasure:'uoms/getUnitOfMeasure'
+      getUnitOfMeasure: 'uoms/getUnitOfMeasure'
     }),
+    updateUom(e){
+      console.log(e)
+      this.getUnitOfMeasure({
+        product_id:e
+      })
+      console.log(this.uoms)
+    },
     handleSizeChange(size) {
       this.filters.per_page = size;
       this.getProducts({...this.filters});
@@ -289,8 +271,28 @@ export default {
     handleCurrentChange(page) {
       this.filters.page = page;
       this.getProducts({...this.filters});
+    },
+    uncheckSortBy(){
+      this.filters.sort_by = ''
+    },
+    uncheckTags(){
+      this.filters.tag = '';
     }
-  }
+  },
+  watch: {
+    search: function (val) {
+      this.getProducts({
+        ...this.filters,
+        search: val
+      });
+    },
+    filters: {
+      deep: true,
+      handler: function () {
+        this.getProducts(this.filters)
+      }
+    }
+  },
 }
 </script>
 <style>

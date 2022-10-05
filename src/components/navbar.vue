@@ -60,6 +60,7 @@
             class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
             type="text"
             id="search"
+            v-model="search"
             placeholder="Search a Wine.."/>
       </div>
     </div>
@@ -113,6 +114,7 @@ export default {
     return {
       open: false,
       cart: false,
+      search: '',
     };
   },
   components: {ArrowDown},
