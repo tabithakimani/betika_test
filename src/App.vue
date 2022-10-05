@@ -1,11 +1,16 @@
 <template>
-    <app-layout/>
+  <nav-bar/>
+    <home/>
+  <footer/>
 </template>
 
 <script>
-import AppLayout from './views/layout';
+import Home from './views/home';
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import NavBar from "@/components/navbar";
 export default {
-  components: { AppLayout },
+  components: {NavBar, Home,Navbar,Footer },
 };
 </script>
 

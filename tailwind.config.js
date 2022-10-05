@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    mode: 'jit',
     content: ["./src/**/*.{html,js,vue}"],
     theme: {
         screens: {
@@ -56,7 +57,7 @@ module.exports = {
                 800: '#9B2C2C',
                 900: '#742A2A',
                 1000: '#e40136',
-                950:'#58181F'
+                950: '#bd515f'
             },
             zinc: {
                 400: '#a1a1aa',
