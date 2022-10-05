@@ -1,15 +1,17 @@
 import api from "../api";
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
 
 export default {
     namespaced: true,
     state: {
         products: {data: [], total: 0, per_page: 25, current_page: 1},
         product: {},
+        tags: {},
     },
     getters: {
         products: state => state.products,
         product: state => state.product,
+        tags: state => state.tags,
     },
     mutations: {
         setProducts(state, products) {
@@ -17,6 +19,9 @@ export default {
         },
         setProduct(state, product) {
             state.product = product;
+        },
+        setTags(state, tags) {
+            state.tags = tags;
         },
     },
     actions: {
@@ -28,6 +33,17 @@ export default {
                 ElMessage({
                     dangerouslyUseHTMLString: true,
                     message: 'Error fetching products!',
+                })
+            }
+        },
+        async getTags({commit}, filters) {
+            try {
+                const response = await api.getTags(filters);
+                commit('setTags', response);
+            } catch (e) {
+                ElMessage({
+                    dangerouslyUseHTMLString: true,
+                    message: 'Error fetching tags!',
                 })
             }
         },

@@ -21,7 +21,7 @@ module.exports = {
         },
         extend: {
             fontFamily: {
-                'Montserrat': ['Montserrat', 'sans-serif']
+                'serif': ['Times']
             },
             textUnderlineOffset: {
                 16: '30px',
@@ -39,7 +39,7 @@ module.exports = {
             transparent: 'transparent',
             black: '#000',
             white: '#fff',
-            slate: '#E4E4E7',
+            slate: '#F9FAFB',
             faint: '#7e7e7f',
             dark_gray: '#494949',
             card: '#f5f5f5',
@@ -60,6 +60,7 @@ module.exports = {
                 950: '#bd515f'
             },
             zinc: {
+                200: '#F7F7F7',
                 400: '#a1a1aa',
                 500: '#828284',
                 600: '#7e7e7f',

@@ -1,5 +1,6 @@
 import api from "../api";
 import {ElMessage} from 'element-plus'
+import router from "@/router";
 
 export default {
     namespaced: true,
@@ -54,7 +55,7 @@ export default {
                 await localStorage.setItem('citadel', response.token);
                 await localStorage.setItem('user', JSON.stringify(response.user))
                 commit('setUser', response.user);
-                window.location.href = '/'
+                router.push('/');
             } catch (e) {
                 ElMessage({message: 'Error logging in'});
             }
@@ -62,14 +63,15 @@ export default {
         async logout(context, filters = {}) {
             await api.logout(filters);
             localStorage.removeItem('citadel');
-            window.location.href = '/login';
+            localStorage.removeItem('user');
+            router.push('/account');
         },
         async register({dispatch, commit}, data) {
             try {
                 commit('hasErrors', false)
                 const response = await api.register(data);
                 await localStorage.setItem('user', JSON.stringify(response.user))
-                window.location.href = '/'
+                router.push('/');
             } catch (e) {
                 commit('hasErrors', true)
                 commit('setErrors', e.response)
