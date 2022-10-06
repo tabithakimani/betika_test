@@ -1,8 +1,8 @@
 <template>
 
   <!-- ====== Forms Section Start -->
-  <div class="flex mx-10">
-    <div class="w-full px-4">
+  <div class="flex md:flex-row flex-col md:mx-10 mx-2">
+    <div class="w-full md:px-4 p-0">
       <div
           class="
                max-w-[525px]
@@ -95,7 +95,7 @@
         </form>
       </div>
     </div>
-    <div class="w-full px-4">
+    <div class="w-full md:px-4 p-0">
       <div
           class="
                max-w-[525px]
