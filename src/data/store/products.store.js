@@ -7,11 +7,15 @@ export default {
         products: {data: [], total: 0, per_page: 25, current_page: 1},
         product: {},
         tags: {},
+        cart_items:{},
+        total:''
     },
     getters: {
         products: state => state.products,
+        cart_items: state => state.cart_items,
         product: state => state.product,
         tags: state => state.tags,
+        total: state => state.total,
     },
     mutations: {
         setProducts(state, products) {
@@ -22,6 +26,12 @@ export default {
         },
         setTags(state, tags) {
             state.tags = tags;
+        },
+        setTotal(state, total) {
+            state.total = total;
+        },
+        setCartItems(state, cart_items) {
+            state.cart_items = cart_items;
         },
     },
     actions: {

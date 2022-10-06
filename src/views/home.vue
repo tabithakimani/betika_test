@@ -274,13 +274,27 @@ export default {
         this.getProducts(this.filters)
         this.getUnitOfMeasure({})
         this.getTags({})
+
+        let cart_items =  JSON.parse(localStorage.getItem('cart')) ?? []
+        cart_items = Object.values(cart_items.reduce((a, {id,name,image,uom_id,price}) => {
+            a[id] = a[id] || {id, quantity: 0, name,image,uom_id,price};
+            a[id].quantity++;
+            return a;
+        }, Object.create(null)));
+
+        let total = cart_items.reduce(function (s, a) {
+            return s + (a.price * a.quantity);
+        }, 0);
+        this.$store.commit('products/setCartItems', cart_items)
+        this.$store.commit('products/setTotal', total)
+
     },
     computed: {
         ...mapGetters({
             products: 'products/products',
             product: 'products/product',
             uoms: 'uoms/uoms',
-            tags: 'products/tags'
+            tags: 'products/tags',
         }),
         computed_product() {
             return this.products.data.map(function (item) {
@@ -316,7 +330,22 @@ export default {
             }
         },
         addProduct(product){
-            console.log(product)
+            let cart = JSON.parse(localStorage.getItem('cart')) ?? []
+            cart.push(product)
+            localStorage.setItem('cart', JSON.stringify(cart))
+
+            cart =  JSON.parse(localStorage.getItem('cart')) ?? []
+            let cart_items = Object.values(cart.reduce((a, {id,name,image,uom_id,price}) => {
+                a[id] = a[id] || {id, quantity: 0, name,image,uom_id,price};
+                a[id].quantity++;
+                return a;
+            }, Object.create(null)));
+
+            let total = cart_items.reduce(function (s, a) {
+                return s + (a.price * a.quantity);
+            }, 0);
+            this.$store.commit('products/setCartItems', cart_items)
+            this.$store.commit('products/setTotal', total)
         },
         handleSizeChange(size) {
             this.filters.per_page = size;

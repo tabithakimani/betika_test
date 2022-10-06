@@ -101,7 +101,7 @@
             <ul class="h-96 overflow-y-auto">
                 <li v-for="item in cart_items" :key="item.id" class="flex flex-wrap group mb-8 p-2">
                     <div class="mr-5 relative">
-                        <a href="#"><img src="../assets/images/wine_bottle.png" alt="product image"
+                        <a href="#"><img :src="item.image" alt="product image"
                                          class="object-scale-down"
                                          loading="lazy" width="50" height="50"></a>
                         <button
@@ -110,25 +110,23 @@
                     </div>
                     <div class="flex-1 pr-3 space-y-6">
                         <h4>
-                            <a class="font-light text-sm md:text-base text-dark transition-all tracking-normal"
-                               href="#">Birpod
-                                product unsde - m / gold</a>
+                            <a class="font-light text-sm md:text-base text-dark transition-all tracking-normal">{{ item.name }}</a>
                         </h4>
                         <span
-                            class="font-light text-sm text-dark transition-all tracking-normal">1 x <span>$80.00</span></span>
+                            class="font-light text-sm text-dark transition-all tracking-normal"> <span>${{item.price }}</span></span>
                         <br>
                         <div class="flex flex-row justify-center">
-                            <a @click="updateQuantity(item,item.quantity - 1)" href="javascript:void(0)"
+                            <button  disabled @click="updateQuantity(item,item.quantity - 1)" href="javascript:void(0)"
                                class="flex items-center justify-center hover:bg-red-950 mr-1 w-12 h-12 border rounded-full">
                                 -
-                            </a>
+                            </button>
                             <div class="flex items-center justify-center mr-1 w-12 h-12 border rounded-full">
                                 {{ item.quantity }}
                             </div>
-                            <a @click="updateQuantity(item,item.quantity + 1)" href="javascript:void(0)"
+                            <button disabled @click="updateQuantity(item,item.quantity + 1)" href="javascript:void(0)"
                                class="flex items-center justify-center hover:bg-red-950 w-12 h-12 border rounded-full">
                                 +
-                            </a>
+                            </button>
 
                         </div>
                     </div>
@@ -137,7 +135,7 @@
             </ul>
             <div
                 class="flex flex-wrap justify-between items-center py-4 my-6 border-t border-b border-gray-400 font-normal text-base text-dark capitalize">
-                Total:<span>$218.00</span>
+                Total:<span>{{parseFloat(total).toFixed(2)}}</span>
             </div>
             <div class="text-center">
                 <router-link to="/checkout">
@@ -155,30 +153,24 @@
 
 <script>
 
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: 'Cart',
     components: {},
     data() {
         return {
-            cart_items: [
-                {
-                    id: 1,
-                    name: 'hajhsjhsja',
-                    quantity: 1
-                }
-            ]
         }
     },
     computed: {
         ...mapGetters({
-            visible: 'visible'
+            visible: 'visible',
+            cart_items:'products/cart_items',
+            total:'products/total'
         })
     },
     methods: {
         open_cart() {
-            console.log(this.visible)
             this.$store.commit('setVisible', !this.visible)
         },
         updateQuantity(item, quantity) {
@@ -188,10 +180,18 @@ export default {
                     this.cart_items.splice(cartIndex, 1)
                 } else {
                     this.cart_items[cartIndex].quantity = quantity;
+                    console.log(this.cart_items)
+                    this.$store.commit('products/setCartItems', this.cart_items)
+                    console.log(this.cart_items)
                 }
             }
+
+            let total = this.cart_items.reduce(function (s, a) {
+                return s + (a.price * a.quantity);
+            }, 0);
+            this.$store.commit('products/setTotal', this.total)
         },
-    }
+    },
 }
 </script>
 

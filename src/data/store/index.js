@@ -2,13 +2,14 @@ import {createStore} from 'vuex'
 import products from "@/data/store/products.store";
 import uoms from "@/data/store/uoms.store"
 import users from "@/data/store/users.store";
+import orders from "@/data/store/orders.store";
 
 export default createStore({
     state: {
         autoSave: true,
         loading: {},
         clear_form: false,
-        visible:false
+        visible:false,
     },
     getters: {
         visible: state => state.visible,
@@ -28,6 +29,7 @@ export default createStore({
     modules: {
         products,
         uoms,
+        orders,
         users
     }
 })

@@ -133,6 +133,7 @@ export default {
             open: false,
             cart: false,
             search: '',
+            filters:{paginate:true}
         };
     },
     components: {ArrowDown},
@@ -147,7 +148,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            logout: 'users/logout'
+            logout: 'users/logout',
+            getProducts: 'products/getProducts',
         }),
         tog() {
             this.open = !this.open;
@@ -162,7 +164,15 @@ export default {
         logoutUser() {
             this.logout()
         }
-    }
+    },
+    watch: {
+        search: function (val) {
+            this.getProducts({
+                ...this.filters,
+                search: val
+            });
+        },
+    },
 };
 </script>
 
