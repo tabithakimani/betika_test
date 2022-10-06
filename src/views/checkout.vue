@@ -49,7 +49,7 @@
                                 <ul v-for="item in cart_items"  class=" border-b border-gray-600 py-5 my-5">
                                     <li class="flex flex-wrap items-center justify-between">
                                         <span>{{item.name}}</span>
-                                        <span>{{item.price * item.quantity}}</span>
+                                        <span>{{parseFloat(item.price * item.quantity).toFixed(2)}}</span>
                                     </li>
                                 </ul>
                                 <ul class="flex flex-wrap items-center justify-between border-b border-gray-600 py-5 my-10">

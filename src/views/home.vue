@@ -205,20 +205,9 @@
                                     class="flex justify-start items-start m-4 text-black font-bold md:text-4xl text-3xl">
                                     <span class="font-bold">{{ form.name }}</span>
                                 </div>
-                                <div class="flex flex-col items-start md:text-3xl text-2xl">
-                                    <p>
-                                        Case: {{
-                                            Object.keys(form.unit_of_measures).length === 0 ? '' : form.unit_of_measures.map(function (item) {
-                                                return item;
-                                            }).filter(val => val.name === 'Case')
-                                        }}
-                                    </p>
-                                    <p>
-                                        Bottle: {{
-                                            Object.keys(form.unit_of_measures).length === 0 ? '' : form.unit_of_measures.map(function (item) {
-                                                return item.price;
-                                            }).filter(val => val.name === 'Bottle')
-                                        }}
+                                <div v-if="form.unit_of_measures" class="flex flex-col items-start md:text-3xl text-2xl">
+                                    <p class="text-lg text-red-950" v-for="uom in form.unit_of_measures">
+                                        {{uom.name}} : {{uom.price}}
                                     </p>
                                 </div>
                                 <div class="text-justify text-md mb-2">
