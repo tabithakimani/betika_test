@@ -44,7 +44,7 @@
                         <div class="flex items-center justify-center mr-1 w-12 h-12 border rounded-full">
                             {{ item.quantity }}
                         </div>
-                        <button @click="updateQuantity(item,item.quantity + 1,'del')" href="javascript:void(0)"
+                        <button @click="updateQuantity(item,item.quantity + 1,'add')" href="javascript:void(0)"
                                 class="flex items-center justify-center hover:bg-red-950 w-12 h-12 border rounded-full">
                             +
                         </button>
