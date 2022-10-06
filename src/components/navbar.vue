@@ -76,7 +76,7 @@
 
     <!--  mobile header-->
     <header
-        :class="open ? 'navbar-open' : 'navbar-close'"
+        :class="nav_visible ? 'navbar-open' : 'navbar-close'"
         class="navbar w-64 h-screen fixed overflow-x-scroll bg-white top-0 z-50 md:invisible bg-slate">
         <div class="flex pr-2 justify-end">
             <button @click="tog" class="p-4 text-white text-xl font-bold">
@@ -130,7 +130,6 @@ export default {
     name: "NavBar",
     data() {
         return {
-            open: false,
             cart: false,
             search: '',
             filters:{paginate:true}
@@ -143,7 +142,8 @@ export default {
         },
         ...mapGetters({
             user: 'users/user',
-            visible: 'visible'
+            visible: 'visible',
+            nav_visible:'nav_visible'
         })
     },
     methods: {
@@ -152,14 +152,16 @@ export default {
             getProducts: 'products/getProducts',
         }),
         tog() {
-            this.open = !this.open;
-            if (this.open === true) {
-                this.cart = false
+            this.$store.commit('setNavVisible', !this.nav_visible);
+            if (this.nav_visible === true) {
+                this.$store.commit('setVisible', false)
             }
         },
         open_cart() {
-            console.log(this.visible)
             this.$store.commit('setVisible', !this.visible)
+            if (this.visible === true) {
+                this.$store.commit('setNavVisible', false)
+            }
         },
         logoutUser() {
             this.logout()

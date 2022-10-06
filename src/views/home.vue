@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="flex-row space-x-2 space-y-2">
-                        <ul class="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
+                        <ul class="grid grid-cols-3 gap-x-2 m-6 max-w-md mx-auto">
                             <li class="relative">
                                 <input class="sr-only peer" type="radio" value="price" v-model="filters.sort_by"
                                        id="answer_price">
@@ -68,14 +68,14 @@
                         </p>
                     </div>
                     <div class="flex-row space-x-2 space-y-2">
-                        <ul class="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
+                        <ul class="grid grid-cols-4 gap-x-3 m-10 max-w-md mx-auto">
                             <div v-for="(tag,index) in tags.data" :key="index">
 
                                 <li class="relative">
                                     <input class="sr-only peer" type="radio" v-bind:value="tag.class"
                                            v-model="filters.tag" :id="index">
                                     <label v-bind:for="index"
-                                           class="flex items-center justify-center hover:bg-red-950 hover:text-white p-2 bg-white border border-gray-300 rounded-full cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-950 peer-checked:ring-2 peer-checked:border-transparent">
+                                           class="flex items-center justify-center hover:bg-red-950 hover:text-white px-4 p-2 bg-white border border-gray-300 rounded-full cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-950 peer-checked:ring-2 peer-checked:border-transparent">
                                         {{ tag.class }}
                                     </label>
 
@@ -121,7 +121,7 @@
                                         </div>
                                         <div class="flex flex-col items-center justify-center w-full h-[16%]">
                                             UOM
-                                            <select @input="updateUom(product,$event.target.value)" class="m-2"
+                                            <select @input="updateUom(product,$event.target.value)" class="bg-white border border-gray-500 text-gray-700 text-sm rounded-md focus:ring-red-950 focus:border-red-950 block w-full p-1"
                                                     size="small" style="width: 60%">
                                                 <option v-for="uom in product.unit_of_measures"
                                                         :label="uom.name"
@@ -130,13 +130,13 @@
                                                 />
                                             </select>
                                         </div>
-                                        <div class="flex justify-center items-end w-full h-[16%]">
+                                        <div class="flex justify-center items-end w-full m-2 h-[16%]">
                                             <button
-                                                class="relative inline-flex items-center justify-center overflow-hidden w-2/5 p-2 h-full font-medium bg-transparent text-red-950 border border-red-950 rounded-full">
+                                                class="relative inline-flex items-center justify-center overflow-hidden p-2 w-5/6 h-full font-medium bg-transparent text-red-950 border border-red-950 rounded-full">
                                                 {{ product.price }}
                                             </button>
                                         </div>
-                                        <div class="flex justify-center items-end w-full mx-2 h-[33%]">
+                                        <div class="flex justify-center items-end w-full mx-2 w-full h-[33%]">
                                             <button
                                                 type="button"
                                                 class=" flex justify-center items-center bg-gray-500 py-1 px-1 w-1/2 h-10 text-xs text-white"
@@ -208,8 +208,8 @@
                                 <div class="flex flex-col items-start md:text-3xl text-2xl">
                                     <p>
                                         Case: {{
-                                            Object.keys(form.unit_of_measures).length === 0 ? '' : form.unit_of_measures?.map(function (item) {
-                                                return item.price;
+                                            Object.keys(form.unit_of_measures).length === 0 ? '' : form.unit_of_measures.map(function (item) {
+                                                return item;
                                             }).filter(val => val.name === 'Case')
                                         }}
                                     </p>
@@ -276,9 +276,9 @@ export default {
         this.getTags({})
 
         let cart_items =  JSON.parse(localStorage.getItem('cart')) ?? []
-        cart_items = Object.values(cart_items.reduce((a, {id,name,image,uom_id,price}) => {
-            a[id] = a[id] || {id, quantity: 0, name,image,uom_id,price};
-            a[id].quantity++;
+        cart_items = Object.values(cart_items.reduce((a, {id,name,image,uom_id,price,uom_name}) => {
+            a[uom_id] = a[uom_id] || {uom_id, quantity: 0, name,image,id,price,uom_name};
+            a[uom_id].quantity++;
             return a;
         }, Object.create(null)));
 
@@ -301,6 +301,7 @@ export default {
                 if (item.unit_of_measures.length && !item.price) {
                     item.price = item.unit_of_measures[0].price
                     item.uom_id = item.unit_of_measures[0].id
+                    item.uom_name = item.unit_of_measures[0].name
                 }
                 return item
 
@@ -325,6 +326,7 @@ export default {
                 if (selected_uom_index !== -1) {
                     this.products.data[product_index].price = product.unit_of_measures[selected_uom_index].price
                     this.products.data[product_index].uom_id = product.unit_of_measures[selected_uom_index].id
+                    this.products.data[product_index].uom_name = product.unit_of_measures[selected_uom_index].name
                     this.products.data = [...this.products.data]
                 }
             }
@@ -335,9 +337,9 @@ export default {
             localStorage.setItem('cart', JSON.stringify(cart))
 
             cart =  JSON.parse(localStorage.getItem('cart')) ?? []
-            let cart_items = Object.values(cart.reduce((a, {id,name,image,uom_id,price}) => {
-                a[id] = a[id] || {id, quantity: 0, name,image,uom_id,price};
-                a[id].quantity++;
+            let cart_items = Object.values(cart.reduce((a, {id,name,image,uom_id,price,uom_name}) => {
+                a[uom_id] = a[uom_id] || {uom_id, quantity: 0, name,image,id,price,uom_name};
+                a[uom_id].quantity++;
                 return a;
             }, Object.create(null)));
 

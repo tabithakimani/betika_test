@@ -16,78 +16,55 @@
             <button class="offcanvas-close md:invisible" aria-label="close icon"><i class="icon-close"></i></button>
         </div>
         <ul class="h-96 overflow-y-auto">
-            <li class="flex flex-wrap group mb-8">
+            <li v-for="item in cart_items" :key="item.id" class="flex flex-wrap group mb-8 p-2">
                 <div class="mr-5 relative">
-                    <a href="#"><img src="../assets/images/wine_bottle.png" alt="product image"
+                    <a href="#"><img :src="item.image" alt="product image"
                                      class="object-scale-down"
-                                     loading="lazy" width="45" height="40"></a>
+                                     loading="lazy" width="50" height="50"></a>
                     <button
                         class="absolute top-3 left-3 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all hover:text-orange">
                         <i class="icon-close"></i></button>
                 </div>
-                <div class="flex-1 pr-3">
+                <div class="flex-1 pr-3 space-y-6">
                     <h4>
-                        <a class="font-light text-sm md:text-base text-dark transition-all tracking-normal" href="#">Birpod
-                            product unsde - m / gold</a>
+                        <a class="font-light text-sm md:text-base text-dark transition-all tracking-normal">{{
+                                item.name
+                            }}</a>
                     </h4>
                     <span
-                        class="font-light text-sm text-dark transition-all tracking-normal">1 x <span>$80.00</span></span>
+                        class="font-light text-sm text-dark transition-all tracking-normal"> <span>${{
+                            item.price
+                        }}</span></span>
+                    <br>
                     <div class="flex flex-row justify-center">
-                        <a @click="" href="javascript:void(0)"
-                           class="flex items-center justify-center hover:bg-red-400 mr-1 w-12 h-12 border rounded-full">
+                        <button @click="updateQuantity(item,item.quantity - 1,'del')" href="javascript:void(0)"
+                                class="flex items-center justify-center hover:bg-red-950 mr-1 w-12 h-12 border rounded-full">
                             -
-                        </a>
+                        </button>
                         <div class="flex items-center justify-center mr-1 w-12 h-12 border rounded-full">
-                            1
+                            {{ item.quantity }}
                         </div>
-                        <a @click="" href="javascript:void(0)"
-                           class="flex items-center justify-center hover:bg-red-400 w-12 h-12 border rounded-full">
+                        <button @click="updateQuantity(item,item.quantity + 1,'del')" href="javascript:void(0)"
+                                class="flex items-center justify-center hover:bg-red-950 w-12 h-12 border rounded-full">
                             +
-                        </a>
+                        </button>
 
                     </div>
                 </div>
-            </li>
-            <li class="flex flex-wrap group mb-8">
-                <div class="mr-5 relative">
-                    <a href="#"><img src="../assets/images/wine_bottle.png" alt="product image"
-                                     class="object-scale-down"
-                                     loading="lazy" width="45" height="40"></a>
-                    <button
-                        class="absolute top-3 left-3 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all hover:text-orange">
-                        <i class="icon-close"></i></button>
-                </div>
-                <div class="flex-1 pr-3">
-                    <h4>
-                        <a class="font-light text-sm md:text-base text-dark transition-all tracking-normal" href="#">Birpod
-                            product unsde - m / gold</a>
-                    </h4>
-                    <span
-                        class="font-light text-sm text-dark transition-all tracking-normal">1 x <span>$80.00</span></span>
-                    <div class="flex flex-row justify-center">
-                        <a @click="" href="javascript:void(0)"
-                           class="flex items-center justify-center hover:bg-red-950 mr-1 w-12 h-12 border rounded-full">
-                            -
-                        </a>
-                        <div class="flex items-center justify-center mr-1 w-12 h-12 border rounded-full">
-                            1
-                        </div>
-                        <a @click="" href="javascript:void(0)"
-                           class="flex items-center justify-center hover:bg-red-950 w-12 h-12 border rounded-full">
-                            +
-                        </a>
-
-                    </div>
-                </div>
+                <hr class="w-full"/>
             </li>
         </ul>
         <div
-            class="flex flex-wrap justify-between items-center py-4 my-6 border-t border-b border-gray-300 font-normal text-base text-dark capitalize">
-            Total:<span>$218.00</span>
+            class="flex flex-wrap justify-between items-center py-4 my-6 border-t border-b border-gray-400 font-normal text-base text-dark capitalize">
+            Total:<span>{{ parseFloat(total).toFixed(2) }}</span>
         </div>
         <div class="text-center">
-            <a class="py-5 px-10 block bg-white border border-solid border-gray-300 uppercase font-semibold text-base hover:bg-red-950 hover:border-red-950 hover:text-white transition-all leading-none"
-               href="">Checkout</a>
+            <router-link to="/checkout">
+                <button
+                    class="w-full py-5 px-10 block bg-gray-500 uppercase font-semibold text-base text-white transition-all leading-none">
+                    Checkout
+                </button>
+            </router-link>
         </div>
     </div>
 
@@ -95,7 +72,7 @@
     <div class="rounded overflow-hidden md:w-2/5 w-0 invisible md:visible">
         <div class="shadow border p-8">
             <div class="flex flex-wrap justify-between items-center pb-6 mb-6 border-b border-gray-400">
-                <h4 class="font-normal text-md text-dark capitalize">Shoping Cart</h4>
+                <h4 class="font-normal text-md text-dark capitalize">Shopping Cart</h4>
                 <button class="offcanvas-close md:invisible" aria-label="close icon"><i class="icon-close"></i></button>
             </div>
             <ul class="h-96 overflow-y-auto">
@@ -110,21 +87,25 @@
                     </div>
                     <div class="flex-1 pr-3 space-y-6">
                         <h4>
-                            <a class="font-light text-sm md:text-base text-dark transition-all tracking-normal">{{ item.name }}</a>
+                            <a class="font-light text-sm md:text-base text-dark transition-all tracking-normal">{{
+                                    item.name
+                                }}</a>
                         </h4>
                         <span
-                            class="font-light text-sm text-dark transition-all tracking-normal"> <span>${{item.price }}</span></span>
+                            class="font-light text-sm text-dark transition-all tracking-normal"><span>{{item.uom_name}}</span> <span>${{
+                                item.price
+                            }}</span></span>
                         <br>
                         <div class="flex flex-row justify-center">
-                            <button  disabled @click="updateQuantity(item,item.quantity - 1)" href="javascript:void(0)"
-                               class="flex items-center justify-center hover:bg-red-950 mr-1 w-12 h-12 border rounded-full">
+                            <button @click="updateQuantity(item,item.quantity - 1,'del')" href="javascript:void(0)"
+                                    class="flex items-center justify-center hover:bg-red-950 mr-1 w-12 h-12 border rounded-full">
                                 -
                             </button>
                             <div class="flex items-center justify-center mr-1 w-12 h-12 border rounded-full">
                                 {{ item.quantity }}
                             </div>
-                            <button disabled @click="updateQuantity(item,item.quantity + 1)" href="javascript:void(0)"
-                               class="flex items-center justify-center hover:bg-red-950 w-12 h-12 border rounded-full">
+                            <button @click="updateQuantity(item,item.quantity + 1,'add')" href="javascript:void(0)"
+                                    class="flex items-center justify-center hover:bg-red-950 w-12 h-12 border rounded-full">
                                 +
                             </button>
 
@@ -135,7 +116,7 @@
             </ul>
             <div
                 class="flex flex-wrap justify-between items-center py-4 my-6 border-t border-b border-gray-400 font-normal text-base text-dark capitalize">
-                Total:<span>{{parseFloat(total).toFixed(2)}}</span>
+                Total:<span>{{ parseFloat(total).toFixed(2) }}</span>
             </div>
             <div class="text-center">
                 <router-link to="/checkout">
@@ -159,37 +140,58 @@ export default {
     name: 'Cart',
     components: {},
     data() {
-        return {
-        }
+        return {}
     },
     computed: {
         ...mapGetters({
             visible: 'visible',
-            cart_items:'products/cart_items',
-            total:'products/total'
+            cart_items: 'products/cart_items',
+            total: 'products/total'
         })
     },
     methods: {
         open_cart() {
             this.$store.commit('setVisible', !this.visible)
         },
-        updateQuantity(item, quantity) {
-            let cartIndex = this.cart_items.findIndex(k => k.id === item.id)
-            if (cartIndex !== -1) {
-                if (quantity < 1) {
-                    this.cart_items.splice(cartIndex, 1)
-                } else {
-                    this.cart_items[cartIndex].quantity = quantity;
-                    console.log(this.cart_items)
-                    this.$store.commit('products/setCartItems', this.cart_items)
-                    console.log(this.cart_items)
-                }
-            }
+        updateQuantity(item, quantity, action) {
+            let cartIndex = this.cart_items.findIndex(k => k.uom_id === item.uom_id)
+            console.log(cartIndex,item.uom_id,this.cart_items)
 
-            let total = this.cart_items.reduce(function (s, a) {
-                return s + (a.price * a.quantity);
-            }, 0);
-            this.$store.commit('products/setTotal', this.total)
+            if (cartIndex !== -1) {
+
+                this.cart_items[cartIndex].quantity = quantity;
+
+                let cart = JSON.parse(localStorage.getItem('cart')) ?? []
+
+                const indexOfObject = cart.findIndex(object => {
+                    return object.uom_id === this.cart_items[cartIndex].uom_id;
+                });
+
+                if (action === 'del') {
+                    if (quantity < 1) {
+                        this.cart_items.splice(cartIndex, 1)
+                    }
+                    cart.splice(indexOfObject, 1);
+                } else {
+                    cart.push(item)
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart))
+
+                cart = JSON.parse(localStorage.getItem('cart')) ?? []
+                let cart_items = Object.values(cart.reduce((a, {id, name, image, uom_id, price,uom_name}) => {
+                    a[uom_id] = a[uom_id] || {uom_id, quantity: 0, name, image, id, price,uom_name};
+                    a[uom_id].quantity++;
+                    return a;
+                }, Object.create(null)));
+
+                let total = cart_items.reduce(function (s, a) {
+                    return s + (a.price * a.quantity);
+                }, 0);
+
+                this.$store.commit('products/setCartItems', cart_items)
+                this.$store.commit('products/setTotal', total)
+            }
         },
     },
 }
