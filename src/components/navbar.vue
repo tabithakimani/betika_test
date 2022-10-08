@@ -45,7 +45,9 @@
                         </el-dropdown>
                     </div>
                 </ul>
-                <button @click="open_cart" class="md:hidden px-2 py-2 font-semibold text-gray-600 rounded">
+
+                <button @click="open_cart" class="md:hidden text-primary text-md hover:text-orange transition-all relative offcanvas-toggle">
+                    <span class="w-5 h-5 bg-red-950 text-white text-sm rounded-full font-normal flex flex-wrap items-center justify-center absolute -top-3 left-2 leading-none">{{cart_items.length}}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -140,10 +142,13 @@ export default {
         isLoggedIn() {
             return this.$store.getters['users/loggedIn'];
         },
+        user(){
+            return JSON.parse(localStorage.getItem('user')) ;
+        },
         ...mapGetters({
-            user: 'users/user',
             visible: 'visible',
-            nav_visible:'nav_visible'
+            nav_visible:'nav_visible',
+            cart_items:'products/cart_items'
         })
     },
     methods: {

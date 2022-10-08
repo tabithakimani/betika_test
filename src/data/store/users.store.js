@@ -51,27 +51,36 @@ export default {
     actions: {
         async login({commit}, credentials) {
             try {
+                commit('hasErrors', false)
                 const response = await api.login(credentials);
                 await localStorage.setItem('citadel', response.token);
                 await localStorage.setItem('user', JSON.stringify(response.user))
                 commit('setUser', response.user);
-                router.push('/');
+                window.location.href = '/'
             } catch (e) {
-                ElMessage({message: 'Error logging in'});
+                commit('hasErrors', true)
+                commit('setErrors', e.response)
+                let status = e.response.status
+                if (status === 422) {
+                    ElMessage({type: 'error', message: 'Please correct the error below'});
+                }
+                if (status === 401) {
+                    ElMessage({type: 'error', message: e.response.data.message});
+                }
             }
         },
         async logout(context, filters = {}) {
             await api.logout(filters);
             localStorage.removeItem('citadel');
             localStorage.removeItem('user');
-            router.push('/account');
+            window.location.href = '/account'
         },
         async register({dispatch, commit}, data) {
             try {
                 commit('hasErrors', false)
                 const response = await api.register(data);
                 await localStorage.setItem('user', JSON.stringify(response.user))
-                router.push('/');
+                window.location.href = '/'
             } catch (e) {
                 commit('hasErrors', true)
                 commit('setErrors', e.response)

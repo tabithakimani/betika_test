@@ -41,9 +41,9 @@
                         focus:border-primary
                         "
             />
-            <span class="text-red-650" v-if="errors.data.errors.phone_number && this.has_errors">
-                    {{ errors.data.errors.phone_number[0] }}
-                  </span>
+<!--            <span class="text-red-650" v-if="errors.data.errors.phone_number && this.has_errors">-->
+<!--                    {{ errors.data.errors.phone_number[0] }}-->
+<!--                  </span>-->
           </div>
           <div class="mb-6">
             <input
@@ -65,9 +65,9 @@
                         focus:border-primary
                         "
             />
-            <span class="text-red-650" v-if="errors.data.errors.password && this.has_errors">
-                    {{ errors.data.errors.password[0] }}
-                  </span>
+<!--            <span class="text-red-650" v-if="errors.data.errors.password && this.has_errors">-->
+<!--                    {{ errors.data.errors.password[0] }}-->
+<!--                  </span>-->
           </div>
           <div class="mb-10">
             <input
