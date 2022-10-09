@@ -11,7 +11,7 @@
                     <span class="sr-only">Open Menu</span>
                 </button>
             </div>
-            <a href="#">
+            <a href="/">
         <span class="flex text-3xl font-extrabold text-red-950 md:-ml-2"><img
             src="../assets/images/wine-glasses-toasting.jpg" class="h-10 w-12 mr-3" alt="">THE CITADEL</span>
             </a>
@@ -46,8 +46,10 @@
                     </div>
                 </ul>
 
-                <button @click="open_cart" class="md:hidden text-primary text-md hover:text-orange transition-all relative offcanvas-toggle">
-                    <span class="w-5 h-5 bg-red-950 text-white text-sm rounded-full font-normal flex flex-wrap items-center justify-center absolute -top-3 left-2 leading-none">{{cart_items.length}}</span>
+                <button @click="open_cart"
+                        class="md:hidden text-primary text-md hover:text-orange transition-all relative offcanvas-toggle">
+                    <span
+                        class="w-5 h-5 bg-red-950 text-white text-sm rounded-full font-normal flex flex-wrap items-center justify-center absolute -top-3 left-2 leading-none">{{ cart_items.length }}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -134,7 +136,7 @@ export default {
         return {
             cart: false,
             search: '',
-            filters:{paginate:true}
+            filters: {paginate: true}
         };
     },
     components: {ArrowDown},
@@ -142,13 +144,13 @@ export default {
         isLoggedIn() {
             return this.$store.getters['users/loggedIn'];
         },
-        user(){
-            return JSON.parse(localStorage.getItem('user')) ;
+        user() {
+            return JSON.parse(localStorage.getItem('user'));
         },
         ...mapGetters({
             visible: 'visible',
-            nav_visible:'nav_visible',
-            cart_items:'products/cart_items'
+            nav_visible: 'nav_visible',
+            cart_items: 'products/cart_items'
         })
     },
     methods: {

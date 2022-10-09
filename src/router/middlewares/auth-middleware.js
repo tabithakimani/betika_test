@@ -5,8 +5,12 @@ const aclMiddleware = (to, next) => {
     setTimeout(() => {
         const loggedIn = store.getters['users/loggedIn'];
         if (!loggedIn) {
-            router.push('/account');
-            return next(false);
+            next({
+                path: '/account',
+                query: {redirect: to.fullPath}
+            })
+            // router.push('/account');
+            // return next(false);
         }
         return next();
     }, 1000)

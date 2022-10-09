@@ -7,8 +7,8 @@ export default {
         products: {data: [], total: 0, per_page: 25, current_page: 1},
         product: {},
         tags: {},
-        cart_items:{},
-        total:''
+        cart_items: {},
+        total: ''
     },
     getters: {
         products: state => state.products,
@@ -67,6 +67,21 @@ export default {
                     message: 'Error fetching product!',
                 })
             }
+        },
+        async getCartItems({commit}) {
+            let cart = JSON.parse(localStorage.getItem('cart')) ?? []
+            let cart_items = Object.values(cart.reduce((a, {id, name, image, uom_id, price, uom_name}) => {
+                a[uom_id] = a[uom_id] || {uom_id, quantity: 0, name, image, id, price, uom_name};
+                a[uom_id].quantity++;
+                return a;
+            }, Object.create(null)));
+
+            let total = cart_items.reduce(function (s, a) {
+                return s + (a.price * a.quantity);
+            }, 0);
+
+            commit('setCartItems', cart_items)
+            commit('setTotal', total)
         },
     }
 }

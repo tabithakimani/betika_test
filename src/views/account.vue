@@ -1,10 +1,10 @@
 <template>
 
-  <!-- ====== Forms Section Start -->
-  <div class="flex md:flex-row flex-col md:mx-10 mx-2">
-    <div class="w-full md:px-4 p-0">
-      <div
-          class="
+    <!-- ====== Forms Section Start -->
+    <div class="flex md:flex-row flex-col md:mx-10 mx-2">
+        <div class="w-full md:px-4 p-0">
+            <div
+                class="
                max-w-[525px]
                mx-auto
                text-center
@@ -17,16 +17,16 @@
                sm:px-12
                md:px-[60px]
                ">
-        <div class="mb-10 md:mb-16 text-center">
-          Login
-        </div>
-        <form>
-          <div class="mb-6">
-            <input
-                type="text"
-                placeholder="Phone Number"
-                v-model="login_form.phone_number"
-                class="
+                <div class="mb-10 md:mb-16 text-center">
+                    Login
+                </div>
+                <form>
+                    <div class="mb-6">
+                        <input
+                            type="text"
+                            placeholder="Phone Number"
+                            v-model="login_form.phone_number"
+                            class="
                         w-full
                         rounded-md
                         border
@@ -40,17 +40,17 @@
                         focus-visible:shadow-none
                         focus:border-primary
                         "
-            />
-<!--            <span class="text-red-650" v-if="errors.data.errors.phone_number && this.has_errors">-->
-<!--                    {{ errors.data.errors.phone_number[0] }}-->
-<!--                  </span>-->
-          </div>
-          <div class="mb-6">
-            <input
-                type="password"
-                placeholder="Password"
-                v-model="login_form.password"
-                class="
+                        />
+                        <!--            <span class="text-red-650" v-if="errors.data.errors.phone_number && this.has_errors">-->
+                        <!--                    {{ errors.data.errors.phone_number[0] }}-->
+                        <!--                  </span>-->
+                    </div>
+                    <div class="mb-6">
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            v-model="login_form.password"
+                            class="
                         w-full
                         rounded-md
                         border
@@ -64,17 +64,17 @@
                         focus-visible:shadow-none
                         focus:border-primary
                         "
-            />
-<!--            <span class="text-red-650" v-if="errors.data.errors.password && this.has_errors">-->
-<!--                    {{ errors.data.errors.password[0] }}-->
-<!--                  </span>-->
-          </div>
-          <div class="mb-10">
-            <input
-                type="submit"
-                @click="loginUser"
-                value="Sign In"
-                class="
+                        />
+                        <!--            <span class="text-red-650" v-if="errors.data.errors.password && this.has_errors">-->
+                        <!--                    {{ errors.data.errors.password[0] }}-->
+                        <!--                  </span>-->
+                    </div>
+                    <div class="mb-10">
+                        <input
+                            type="button"
+                            @click="loginUser"
+                            value="Sign In"
+                            class="
                         w-full
                         rounded-md
                         border
@@ -90,14 +90,14 @@
                         text-black
                         transition
                         "
-            />
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="w-full md:px-4 p-0">
-      <div
-          class="
+                        />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="w-full md:px-4 p-0">
+            <div
+                class="
                max-w-[525px]
                mx-auto
                text-center
@@ -110,16 +110,16 @@
                sm:px-12
                md:px-[60px]
                ">
-        <div class="mb-10 md:mb-16 text-center">
-          Register
-        </div>
-        <form>
-          <div class="mb-6">
-            <input
-                type="text"
-                placeholder="Full Name"
-                v-model="form.full_name"
-                class="
+                <div class="mb-10 md:mb-16 text-center">
+                    Register
+                </div>
+                <form>
+                    <div class="mb-6">
+                        <input
+                            type="text"
+                            placeholder="Full Name"
+                            v-model="form.full_name"
+                            class="
                         w-full
                         rounded-md
                         border
@@ -133,17 +133,17 @@
                         focus-visible:shadow-none
                         focus:border-primary
                         "
-            />
-            <span class="text-red-650" v-if="errors.data.errors.full_name && this.has_errors">
+                        />
+                        <span class="text-red-650" v-if="errors.data.errors.full_name && this.has_errors">
                     {{ errors.data.errors.full_name[0] }}
                   </span>
-          </div>
-          <div class="mb-6">
-            <input
-                type="text"
-                placeholder="Phone Number"
-                v-model="form.phone_number"
-                class="
+                    </div>
+                    <div class="mb-6">
+                        <input
+                            type="text"
+                            placeholder="Phone Number"
+                            v-model="form.phone_number"
+                            class="
                         w-full
                         rounded-md
                         border
@@ -157,17 +157,17 @@
                         focus-visible:shadow-none
                         focus:border-primary
                         "
-            />
-            <span class="text-red-650" v-if="errors.data.errors.phone_number && this.has_errors">
+                        />
+                        <span class="text-red-650" v-if="errors.data.errors.phone_number && this.has_errors">
                     {{ errors.data.errors.phone_number[0] }}
                   </span>
-          </div>
-          <div class="mb-6">
-            <input
-                type="password"
-                v-model="form.password"
-                placeholder="Password"
-                class="
+                    </div>
+                    <div class="mb-6">
+                        <input
+                            type="password"
+                            v-model="form.password"
+                            placeholder="Password"
+                            class="
                         w-full
                         rounded-md
                         border
@@ -181,17 +181,17 @@
                         focus-visible:shadow-none
                         focus:border-primary
                         "
-            />
-            <span class="text-red-650" v-if="errors.data.errors.password && this.has_errors">
+                        />
+                        <span class="text-red-650" v-if="errors.data.errors.password && this.has_errors">
                     {{ errors.data.errors.password[0] }}
                   </span>
-          </div>
-          <div class="mb-10">
-            <input
-                type="submit"
-                value="Sign Up"
-                @click="registerUser"
-                class="
+                    </div>
+                    <div class="mb-10">
+                        <input
+                            type="button"
+                            value="Sign Up"
+                            @click="registerUser"
+                            class="
                         w-full
                         rounded-md
                         border
@@ -207,42 +207,42 @@
                         text-black
                         transition
                         "
-            />
-          </div>
-        </form>
-      </div>
+                        />
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- ====== Forms Section End -->
+    <!-- ====== Forms Section End -->
 </template>
 <script>
-import {mapGetters,mapActions} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
-  name: 'Account',
-  data() {
-    return {
-      form:{},
-      login_form:{}
-    }
-  },
-  computed:{
-    ...mapGetters({
-      errors: 'users/errors',
-      has_errors: 'users/has_errors',
-    })
-  },
-  methods: {
-    ...mapActions({
-      login: 'users/login',
-      register:'users/register'
-    }),
-    loginUser() {
-      this.login(this.login_form)
+    name: 'Account',
+    data() {
+        return {
+            form: {},
+            login_form: {}
+        }
     },
-    registerUser(){
-      this.register(this.form)
+    computed: {
+        ...mapGetters({
+            errors: 'users/errors',
+            has_errors: 'users/has_errors',
+        })
+    },
+    methods: {
+        ...mapActions({
+            login: 'users/login',
+            register: 'users/register'
+        }),
+        loginUser() {
+            this.login(this.login_form)
+        },
+        registerUser() {
+            this.register(this.form)
+        }
     }
-  }
 }
 </script>

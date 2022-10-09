@@ -111,7 +111,8 @@
                     <div class="grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-7 m-2">
                         <!--            product card-->
                         <div v-for="product in computed_product" :key="product.id">
-                            <div class="card hover:shadow-2xl border border-current rounded-lg p-4 h-full">
+                            <div v-if="product.unit_of_measures.length"
+                                 class="card hover:shadow-2xl border border-current rounded-lg p-4 h-full">
                                 <div class="flex h-full group">
                                     <img :src="product.image" alt="Product"
                                          class="object-contain scale-90 group-hover:scale-110 ease-in duration-500 h-80 xl:h-96 md:h-96 lg:h-96 sm:h-80 w-2/5 p-2">
@@ -121,7 +122,8 @@
                                         </div>
                                         <div class="flex flex-col items-center justify-center w-full h-[16%]">
                                             UOM
-                                            <select @input="updateUom(product,$event.target.value)" class="bg-white border border-gray-500 text-gray-700 text-sm rounded-md focus:ring-red-950 focus:border-red-950 block w-full p-1"
+                                            <select @input="updateUom(product,$event.target.value)"
+                                                    class="bg-white border border-gray-500 text-gray-700 text-sm rounded-md focus:ring-red-950 focus:border-red-950 block w-full p-1"
                                                     size="small" style="width: 60%">
                                                 <option v-for="uom in product.unit_of_measures"
                                                         :label="uom.name"
@@ -202,15 +204,16 @@
                             </div>
                             <div class="flex flex-col justify-around items-start w-1/2 p-4 font-serif">
                                 <div
-                                    class="flex justify-start items-start m-4 text-black font-bold md:text-4xl text-3xl">
-                                    <span class="font-bold">{{ form.name }}</span>
+                                    class="flex justify-start items-start text-black font-bold md:text-4xl text-2xl">
+                                    <span class="font-bold overflow-clip ">{{ form.name }}</span>
                                 </div>
-                                <div v-if="form.unit_of_measures" class="flex flex-col items-start md:text-3xl text-2xl">
+                                <div v-if="form.unit_of_measures"
+                                     class="flex flex-col items-start md:text-3xl text-2xl">
                                     <p class="text-lg text-red-950" v-for="uom in form.unit_of_measures">
-                                        {{uom.name}} : {{uom.price}}
+                                        {{ uom.name }} : {{ uom.price }}
                                     </p>
                                 </div>
-                                <div class="text-justify text-md mb-2">
+                                <div class="flex text-justify text-md mb-2">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                     exercitation ull.
@@ -263,19 +266,7 @@ export default {
         this.getProducts(this.filters)
         this.getUnitOfMeasure({})
         this.getTags({})
-
-        let cart_items =  JSON.parse(localStorage.getItem('cart')) ?? []
-        cart_items = Object.values(cart_items.reduce((a, {id,name,image,uom_id,price,uom_name}) => {
-            a[uom_id] = a[uom_id] || {uom_id, quantity: 0, name,image,id,price,uom_name};
-            a[uom_id].quantity++;
-            return a;
-        }, Object.create(null)));
-
-        let total = cart_items.reduce(function (s, a) {
-            return s + (a.price * a.quantity);
-        }, 0);
-        this.$store.commit('products/setCartItems', cart_items)
-        this.$store.commit('products/setTotal', total)
+        this.getCartItems()
 
     },
     computed: {
@@ -302,7 +293,8 @@ export default {
             getProducts: 'products/getProducts',
             getProduct: 'products/getProduct',
             getUnitOfMeasure: 'uoms/getUnitOfMeasure',
-            getTags: 'products/getTags'
+            getTags: 'products/getTags',
+            getCartItems: 'products/getCartItems'
         }),
         toggleModal: function (product) {
             this.showModal = !this.showModal;
@@ -320,23 +312,12 @@ export default {
                 }
             }
         },
-        addProduct(product){
+        addProduct(product) {
             let cart = JSON.parse(localStorage.getItem('cart')) ?? []
             cart.push(product)
             localStorage.setItem('cart', JSON.stringify(cart))
 
-            cart =  JSON.parse(localStorage.getItem('cart')) ?? []
-            let cart_items = Object.values(cart.reduce((a, {id,name,image,uom_id,price,uom_name}) => {
-                a[uom_id] = a[uom_id] || {uom_id, quantity: 0, name,image,id,price,uom_name};
-                a[uom_id].quantity++;
-                return a;
-            }, Object.create(null)));
-
-            let total = cart_items.reduce(function (s, a) {
-                return s + (a.price * a.quantity);
-            }, 0);
-            this.$store.commit('products/setCartItems', cart_items)
-            this.$store.commit('products/setTotal', total)
+            this.getCartItems()
         },
         handleSizeChange(size) {
             this.filters.per_page = size;

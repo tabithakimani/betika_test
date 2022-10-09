@@ -23,7 +23,7 @@ class Client {
         this.http.interceptors.response.use(response => response, async (error) => {
             if (error.response && error.response.status === 401) {
                 localStorage.removeItem('citadel');
-                window.location.href = '/login';
+                window.location.href = '/account';
             }
             return Promise.reject(error);
         });

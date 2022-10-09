@@ -92,7 +92,9 @@
                                 }}</a>
                         </h4>
                         <span
-                            class="font-light text-sm text-dark transition-all tracking-normal"><span>{{item.uom_name}}</span> <span>${{
+                            class="font-light text-sm text-dark transition-all tracking-normal"><span>{{
+                                item.uom_name
+                            }}</span> <span>${{
                                 item.price
                             }}</span></span>
                         <br>
@@ -142,6 +144,9 @@ export default {
     data() {
         return {}
     },
+    mounted() {
+        this.getCartItems()
+    },
     computed: {
         ...mapGetters({
             visible: 'visible',
@@ -149,13 +154,16 @@ export default {
             total: 'products/total'
         })
     },
+
     methods: {
+        ...mapActions({
+            getCartItems: 'products/getCartItems'
+        }),
         open_cart() {
             this.$store.commit('setVisible', !this.visible)
         },
         updateQuantity(item, quantity, action) {
             let cartIndex = this.cart_items.findIndex(k => k.uom_id === item.uom_id)
-            console.log(cartIndex,item.uom_id,this.cart_items)
 
             if (cartIndex !== -1) {
 
@@ -178,19 +186,7 @@ export default {
 
                 localStorage.setItem('cart', JSON.stringify(cart))
 
-                cart = JSON.parse(localStorage.getItem('cart')) ?? []
-                let cart_items = Object.values(cart.reduce((a, {id, name, image, uom_id, price,uom_name}) => {
-                    a[uom_id] = a[uom_id] || {uom_id, quantity: 0, name, image, id, price,uom_name};
-                    a[uom_id].quantity++;
-                    return a;
-                }, Object.create(null)));
-
-                let total = cart_items.reduce(function (s, a) {
-                    return s + (a.price * a.quantity);
-                }, 0);
-
-                this.$store.commit('products/setCartItems', cart_items)
-                this.$store.commit('products/setTotal', total)
+                this.getCartItems()
             }
         },
     },

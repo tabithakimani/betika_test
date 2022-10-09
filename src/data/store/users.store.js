@@ -51,21 +51,26 @@ export default {
     actions: {
         async login({commit}, credentials) {
             try {
-                commit('hasErrors', false)
                 const response = await api.login(credentials);
                 await localStorage.setItem('citadel', response.token);
                 await localStorage.setItem('user', JSON.stringify(response.user))
                 commit('setUser', response.user);
-                window.location.href = '/'
+                let searchParams = new URLSearchParams(window.location.search);
+
+                if (searchParams.has("redirect")) {
+                    window.location.href = searchParams.get("redirect")
+                } else {
+                    window.location.href = '/'
+                }
+                ElMessage({type: 'success', message: 'Logged in successfully, Please proceed to checkout'});
             } catch (e) {
-                commit('hasErrors', true)
-                commit('setErrors', e.response)
+                console.log(e)
                 let status = e.response.status
                 if (status === 422) {
                     ElMessage({type: 'error', message: 'Please correct the error below'});
                 }
-                if (status === 401) {
-                    ElMessage({type: 'error', message: e.response.data.message});
+                if (status === 403) {
+                    ElMessage({type: 'error', message: e.response.data.message, duration: 10000});
                 }
             }
         },
@@ -84,10 +89,7 @@ export default {
             } catch (e) {
                 commit('hasErrors', true)
                 commit('setErrors', e.response)
-                this._vm.$message.error({
-                    message: 'Please correct the Errors below',
-                    duration: 10000
-                });
+                ElMessage({type: 'error', message: 'Please correct the Errors below', duration: 10000});
             }
         },
 

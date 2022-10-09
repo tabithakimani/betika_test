@@ -10,7 +10,9 @@
                                 <div class="lg:col-span-2">
                                     <div>
                                         <label class="mb-3 inline-block">Street Address</label>
-                                        <input v-model="form.address" class="border border-solid border-gray-300 w-full py-1 px-5 mb-5 placeholder-current text-dark h-10 focus:outline-none text-base" placeholder="House number and street name" type="text">
+                                        <input v-model="form.address"
+                                               class="border border-solid border-gray-300 w-full py-1 px-5 mb-5 placeholder-current text-dark h-10 focus:outline-none text-base"
+                                               placeholder="House number and street name" type="text">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-2">
@@ -41,29 +43,33 @@
                     <div>
                         <h3 class="text-black text-2xl font-bold mb-10">Your order</h3>
                         <div class="bg-zinc-200 p-10">
-                            <div  class="your-order-product-info">
+                            <div class="your-order-product-info">
                                 <ul class="flex flex-wrap items-center justify-between">
-                                    <li class="text-base font-semibold">Product</li>
-                                    <li class="text-base font-semibold">Uom</li>
-                                    <li class="text-base font-semibold">Total</li>
+                                    <li class="flex w-2/5 items-start text-base font-semibold pr-3">Product</li>
+                                    <li class="flex w-1/5 items-center text-base font-semibold">Uom</li>
+                                    <li class="flex w-1/5 items-center text-base font-semibold">Quantity</li>
+                                    <li class="flex w-1/5 items-center text-base font-semibold">Total</li>
                                 </ul>
-                                <ul v-for="item in cart_items"  class=" border-b border-gray-600 py-5 my-5">
+                                <ul v-for="item in cart_items" class=" border-b border-gray-600 py-5 my-5">
                                     <li class="flex flex-wrap items-center justify-between">
-                                        <span>{{item.name}} * {{item.quantity}}</span>
-                                        <span>{{item.uom_name}}</span>
-                                        <span>{{parseFloat(item.price * item.quantity).toFixed(2)}}</span>
+                                        <span class="flex w-2/5 items-start pr-3">{{ item.name }}</span>
+                                        <span class="flex w-1/5 items-center">{{ item.uom_name }}</span>
+                                        <span class="flex w-1/5 items-center">{{ item.quantity }}</span>
+                                        <span class="flex w-1/5 items-center">{{ parseFloat(item.price * item.quantity).toFixed(2) }}</span>
                                     </li>
                                 </ul>
                                 <ul class="flex flex-wrap items-center justify-between border-b border-gray-600 py-5 my-10">
                                     <li class="text-base font-semibold">Total</li>
-                                    <li class="text-base font-semibold">{{parseFloat(total).toFixed(2)}}</li>
+                                    <li class="text-base font-semibold">{{ parseFloat(total).toFixed(2) }}</li>
                                 </ul>
                             </div>
 
                         </div>
                         <div class="mt-6">
-                            <button @click="addOrder" class="block w-full text-center leading-none uppercase text-white text-sm bg-gray-500 px-5 py-5 transition-all hover:bg-orange font-semibold"
-                               >Place Order</button>
+                            <button @click="addOrder"
+                                    class="block w-full text-center leading-none uppercase text-white text-sm bg-gray-500 px-5 py-5 transition-all hover:bg-orange font-semibold"
+                            >Place Order
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -81,6 +87,9 @@ export default {
     components: {
         VueGoogleAutocomplete
     },
+    mounted() {
+        this.getCartItems()
+    },
     data() {
         return {
             form: {},
@@ -92,11 +101,12 @@ export default {
             total: 'products/total'
         }),
     },
-    methods:{
+    methods: {
         ...mapActions({
-           createOrder:'orders/createOrder'
+            getCartItems: 'products/getCartItems',
+            createOrder: 'orders/createOrder'
         }),
-        addOrder(){
+        addOrder() {
 
         }
     }
